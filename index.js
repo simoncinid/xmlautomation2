@@ -1,7 +1,8 @@
 // index.js
 const express = require('express');
 const fetch = require('node-fetch'); // Se usi Node v18+, fetch è globale; altrimenti, usa node-fetch
-const { DOMParser } = require('xmldom'); // Per parsare XML
+const { DOMParser } = require('@xmldom/xmldom');
+
 const pdfjsLib = require('pdfjs-dist'); // Per estrarre testo dai PDF
 
 // Crea l'app Express
