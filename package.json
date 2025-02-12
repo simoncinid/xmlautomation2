@@ -1,14 +1,15 @@
 {
-  "name": "my-render-backend",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "node-fetch": "^2.6.7",
-    "xmldom": "^0.7.5",
-    "pdfjs-dist": "^2.10.377"
+    "name": "my-render-backend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "dependencies": {
+      "express": "^4.18.2",
+      "node-fetch": "^2.6.7",
+      "@xmldom/xmldom": "^0.8.6",
+      "pdfjs-dist": "^2.10.377"
+    }
   }
-}
+  
