@@ -86,7 +86,8 @@ app.post('/api/process', async (req, res) => {
       fatturato,
       tipologia_azienda,
       dimensioni,
-      codice_ateco
+      codice_ateco,
+      provincia
     } = req.body;
     console.log("Dati ricevuti:", req.body);
 
@@ -109,6 +110,7 @@ app.post('/api/process', async (req, res) => {
     <DimensioniAzienda>${dimensioni}</DimensioniAzienda>
     <CodiceIstatAteco>${codice_ateco}</CodiceIstatAteco>
     <Particolarita>${userText}</Particolarita>
+    <Provincia>${provincia}</Provincia>
   </Business>
 </Businesses>`;
     console.log("XML costruito:", xmlPayload.substring(0, 100) + "...");
