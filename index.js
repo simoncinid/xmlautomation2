@@ -75,6 +75,7 @@ app.post('/api/process', async (req, res) => {
   try {
     // Estrai i dati dal payload
     const {
+      nome_azienda,
       anno_costituzione,
       piva,
       controlla_altre_imprese,
@@ -99,6 +100,7 @@ app.post('/api/process', async (req, res) => {
     const xmlPayload = `<?xml version="1.0" encoding="UTF-8"?>
 <Businesses>
   <Business>
+    <CompanyName>${nome_azienda}</CompanyName>
     <AnnoCostituzione>${anno_costituzione}</AnnoCostituzione>
     <PIVA>${piva}</PIVA>
     <ControllaAltReImprese>${controlla_altre_imprese}</ControllaAltReImprese>
