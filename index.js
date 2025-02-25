@@ -76,15 +76,15 @@ app.post('/api/process', async (req, res) => {
     // Estrai i dati dal payload
     const {
       nome_azienda,
-      anno_costituzione,
-      piva,
-      controlla_altre_imprese,
-      controllata_da_altre_imprese,
+      //anno_costituzione,
+      //piva,
+      //controlla_altre_imprese,
+      //controllata_da_altre_imprese,
       particolarita,
-      aspetti_da_migliorare,
-      numero_dipendenti,
+      //aspetti_da_migliorare,
+      //numero_dipendenti,
       forma_giuridica,
-      fatturato,
+      //fatturato,
       tipologia_azienda,
       dimensioni,
       codice_ateco,
@@ -93,25 +93,21 @@ app.post('/api/process', async (req, res) => {
     console.log("Dati ricevuti:", req.body);
 
     // Combina i campi di testo
-    const userText = (particolarita || "") + " " + (aspetti_da_migliorare || "");
-    console.log("Testo utente combinato:", userText);
+    //const userText = (particolarita || "") + " " + (aspetti_da_migliorare || "");
+    //console.log("Testo utente combinato:", userText);
 
     // Costruisci l'XML da inviare
     const xmlPayload = `<?xml version="1.0" encoding="UTF-8"?>
+
+    
+    
 <Businesses>
   <Business>
     <CompanyName>${nome_azienda}</CompanyName>
-    <AnnoCostituzione>${anno_costituzione}</AnnoCostituzione>
-    <PIVA>${piva}</PIVA>
-    <ControllaAltReImprese>${controlla_altre_imprese}</ControllaAltReImprese>
-    <ControllataDaAltReImprese>${controllata_da_altre_imprese}</ControllataDaAltReImprese>
-    <NumeroDipendenti>${numero_dipendenti}</NumeroDipendenti>
-    <FatturatoUltimoEsercizio>${fatturato}</FatturatoUltimoEsercizio>
     <FormaGiuridica>${forma_giuridica}</FormaGiuridica>
     <Tipologia>${tipologia_azienda}</Tipologia>
     <DimensioniAzienda>${dimensioni}</DimensioniAzienda>
     <CodiceIstatAteco>${codice_ateco}</CodiceIstatAteco>
-    <Particolarita>${userText}</Particolarita>
     <Provincia>${provincia}</Provincia>
   </Business>
 </Businesses>`;
@@ -177,7 +173,7 @@ app.post('/api/process', async (req, res) => {
       
       // Ottieni l'embedding del testo utente
       console.log(`Calcolo embedding per il testo utente per il bando ${i}...`);
-      const userEmbedding = await getEmbedding(userText);
+      const userEmbedding = await getEmbedding(particolarita);
       
       let score = 0;
       if (userEmbedding && pdfEmbedding.length > 0) {
