@@ -1,5 +1,8 @@
 // index.js
 const express = require('express');
+const cors = require('cors');
+app.use(cors()); // Permette richieste da qualsiasi origine
+
 const fetch = require('node-fetch'); // Se usi Node v18+, fetch è globale; altrimenti, usa node-fetch
 const { DOMParser } = require('@xmldom/xmldom');
 const pdfjsLib = require('pdfjs-dist');

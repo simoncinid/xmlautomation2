@@ -3,13 +3,13 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-      "start": "node index.js"
+        "start": "node index.js"
     },
     "dependencies": {
-      "express": "^4.18.2",
-      "node-fetch": "^2.6.7",
-      "@xmldom/xmldom": "^0.8.6",
-      "pdfjs-dist": "^2.10.377"
+        "@xmldom/xmldom": "^0.8.6",
+        "cors": "^2.8.5",
+        "express": "^4.18.2",
+        "node-fetch": "^2.6.7",
+        "pdfjs-dist": "^2.10.377"
     }
-  }
-  
+}
