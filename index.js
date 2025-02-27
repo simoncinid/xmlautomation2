@@ -77,18 +77,19 @@ app.post('/api/process', async (req, res) => {
     const {
       nome_azienda,
       //anno_costituzione,
-      //piva,
+      piva,
       //controlla_altre_imprese,
       //controllata_da_altre_imprese,
       particolarita,
-      //aspetti_da_migliorare,
+      aspetti_da_migliorare,
       //numero_dipendenti,
       forma_giuridica,
       //fatturato,
       tipologia_azienda,
       dimensioni,
       codice_ateco,
-      provincia
+      provincia,
+      email
     } = req.body;
     console.log("Dati ricevuti:", req.body);
 
@@ -103,12 +104,15 @@ app.post('/api/process', async (req, res) => {
     
 <Businesses>
   <Business>
+    <PartitaIva>${piva}</PartitaIva>
     <CompanyName>${nome_azienda}</CompanyName>
     <FormaGiuridica>${forma_giuridica}</FormaGiuridica>
     <Tipologia>${tipologia_azienda}</Tipologia>
     <DimensioniAzienda>${dimensioni}</DimensioniAzienda>
     <CodiceIstatAteco>${codice_ateco}</CodiceIstatAteco>
     <Provincia>${provincia}</Provincia>
+    <Particolarita>${particolarita}</Particolarita>
+    <Email>${email}</Email>
   </Business>
 </Businesses>`;
     console.log("XML costruito:", xmlPayload.substring(0, 100) + "...");
@@ -173,7 +177,7 @@ app.post('/api/process', async (req, res) => {
       
       // Ottieni l'embedding del testo utente
       console.log(`Calcolo embedding per il testo utente per il bando ${i}...`);
-      const userEmbedding = await getEmbedding(particolarita);
+      const userEmbedding = await getEmbedding(aspetti_da_migliorare);
       
       let score = 0;
       if (userEmbedding && pdfEmbedding.length > 0) {
