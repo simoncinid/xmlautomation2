@@ -210,7 +210,10 @@ app.post('/api/process', async (req, res) => {
     await fetch(WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ bandi: top3 })
+      body: JSON.stringify({
+        email: email, // Aggiunge l'email dell'utente
+        bandi: top3
+      })      
     });
     console.log("Risultati inviati al webhook con successo.");
 
