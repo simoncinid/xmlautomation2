@@ -165,7 +165,7 @@ app.post('/api/process', async (req, res) => {
     const bandiInfo = [];
     for (let i = 0; i < bandiNodes.length; i++) {
       const node = bandiNodes[i];
-      const nomebando = (node.getElementsByTagName("nomebando")[0]?.textContent) || "N/A";
+      const nomebando = (node.getElementsByTagName("nomearea")[0]?.textContent) || "N/A";
       const schedacompleta = (node.getElementsByTagName("schedacompleta")[0]?.textContent) || "";
       console.log(`Bando ${i}: nome = ${nomebando}, schedacompleta = ${schedacompleta.substring(0, 50)}...`);
       
