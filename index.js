@@ -151,9 +151,15 @@ app.post('/api/process', async (req, res) => {
     console.log("Parsing dell'XML di risposta...");
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlString, "application/xml");
-    console.log(xmlDoc)
+    console.log("XML completo ricevuto:\n", xmlString); // Stampa l'intero XML ricevuto
+
     const bandiNodes = xmlDoc.getElementsByTagName("child");
     console.log("Numero di bandi trovati:", bandiNodes.length);
+
+    // Logga l'intero contenuto di ogni nodo per capire la struttura
+    for (let i = 0; i < bandiNodes.length; i++) {
+      console.log(`Bando ${i} struttura completa:\n`, bandiNodes[i].textContent);
+    }
 
     // Processa ogni bando
     const bandiInfo = [];
