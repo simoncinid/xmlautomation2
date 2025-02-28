@@ -120,7 +120,7 @@ app.post('/api/process', async (req, res) => {
     <Email>${email}</Email>
   </Business>
 </Businesses>`;
-    console.log("XML costruito:", xmlPayload.substring(0, 100) + "...");
+    console.log("XML costruito:", xmlPayload);
     
     // Invia l'XML all'endpoint esterno
     console.log("Invio XML a xmlautomation-rt2n...");
