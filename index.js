@@ -10,6 +10,7 @@ const pdfjsLib = require('pdfjs-dist');
 const app = express();
 app.use(express.json());
 app.use(cors()); // <-- Questo abilita CORS per tutte le richieste
+app.options('*', cors()); // Permette le richieste preflight su tutte le route
 app.use(express.json()); // Middleware per JSON
 // Variabili d'ambiente
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY; // La tua chiave OpenAI
