@@ -151,6 +151,7 @@ app.post('/api/process', async (req, res) => {
     console.log("Parsing dell'XML di risposta...");
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+    console.log(xmlDoc)
     const bandiNodes = xmlDoc.getElementsByTagName("child");
     console.log("Numero di bandi trovati:", bandiNodes.length);
 
