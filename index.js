@@ -166,13 +166,13 @@ app.post('/api/process', async (req, res) => {
     for (let i = 0; i < bandiNodes.length; i++) {
       const node = bandiNodes[i];
       const nomebando = (node.getElementsByTagName("nomebando")[0]?.textContent) || "N/A";
-      const schedacompleta = (node.getElementsByTagName("schedacompleta")[0]?.textContent) || "";
-      console.log(`Bando ${i}: nome = ${nomebando}, schedacompleta = ${schedacompleta.substring(0, 50)}...`);
+      const schedasintetica = (node.getElementsByTagName("schedasintetica")[0]?.textContent) || "";
+      console.log(`Bando ${i}: nome = ${nomebando}, schedasintetica = ${schedasintetica.substring(0, 50)}...`);
       
       let pdfText = "";
-      if (schedacompleta && schedacompleta.endsWith(".pdf")) {
+      if (schedasintetica && schedasintetica.endsWith(".pdf")) {
         console.log(`Estrazione PDF per il bando ${i}...`);
-        const pdfProxyUrl = "https://xmlautomation-rt2n.onrender.com/pdf-proxy?url=" + encodeURIComponent(schedacompleta);
+        const pdfProxyUrl = "https://xmlautomation-rt2n.onrender.com/pdf-proxy?url=" + encodeURIComponent(schedasintetica);
         pdfText = await extractPdfText(pdfProxyUrl);
       }
       
@@ -197,7 +197,7 @@ app.post('/api/process', async (req, res) => {
       }
       console.log(`Bando ${i} - Similarità calcolata: ${score}`);
       
-      bandiInfo.push({ nomebando, schedacompleta, score });
+      bandiInfo.push({ nomebando, schedasintetica, score });
     }
 
     // Ordina e seleziona i primi 3 bandi
