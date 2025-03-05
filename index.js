@@ -216,6 +216,11 @@ app.post('/api/process', async (req, res) => {
       })      
     });
     console.log("Risultati inviati al webhook con successo.");
+    let k = JSON.stringify({
+      email: email, // Aggiunge l'email dell'utente
+      bandi: bandiInfo
+    })    
+    console.log(k)
 
     // Risposta finale al client (GoHighLevel)
     res.status(200).json({ message: "Webhook inviato con successo." });
