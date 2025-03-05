@@ -197,13 +197,13 @@ app.post('/api/process', async (req, res) => {
       }
       console.log(`Bando ${i} - Similarità calcolata: ${score}`);
       
-      bandiInfo.push({ nomebando, schedasintetica, score });
+      bandiInfo.push({ nomebando, schedasintetica});
     }
 
     // Ordina e seleziona i primi 3 bandi
-    bandiInfo.sort((a, b) => b.score - a.score);
-    const top3 = bandiInfo.slice(0, 3);
-    console.log("Top 3 bandi:", top3);
+    //bandiInfo.sort((a, b) => b.score - a.score);
+    //const top3 = bandiInfo.slice(0, 3);
+    console.log("Top 3 bandi:", bandiInfo);
 
     // Invia i risultati al webhook
     console.log("Invio i risultati al webhook:", WEBHOOK_URL);
@@ -212,7 +212,7 @@ app.post('/api/process', async (req, res) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: email, // Aggiunge l'email dell'utente
-        bandi: top3
+        bandi: bandiInfo
       })      
     });
     console.log("Risultati inviati al webhook con successo.");
