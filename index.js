@@ -202,8 +202,8 @@ app.post('/api/process', async (req, res) => {
 
     // Ordina e seleziona i primi 3 bandi
     //bandiInfo.sort((a, b) => b.score - a.score);
-    //const top3 = bandiInfo.slice(0, 3);
-    console.log("Top 3 bandi:", bandiInfo);
+    const top3 = bandiInfo.slice(0, 3);
+    console.log("Top 3 bandi:", top3);
 
     // Invia i risultati al webhook
     console.log("Invio i risultati al webhook:", WEBHOOK_URL);
@@ -212,13 +212,13 @@ app.post('/api/process', async (req, res) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: email, // Aggiunge l'email dell'utente
-        bandi: bandiInfo
+        bandi: top3
       })      
     });
     console.log("Risultati inviati al webhook con successo.");
     let k = JSON.stringify({
       email: email, // Aggiunge l'email dell'utente
-      bandi: bandiInfo
+      bandi: top3
     })    
     console.log(k)
 
