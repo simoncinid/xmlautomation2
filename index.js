@@ -205,9 +205,7 @@ app.post('/api/process', async (req, res) => {
     const top3 = bandiInfo.slice(0, 3);
     console.log("Top 3 bandi:", top3);
 
-    const payloadString = `email=${encodeURIComponent(email)}&bandi=${encodeURIComponent(
-      top3.map(b => `Nome: ${b.nomebando}, Link: ${b.schedasintetica}`).join(" | ")
-    )}`;
+    const payloadString = `email=${email} bandi=${top3}`
     
     console.log("Dati inviati come stringa:", payloadString);
     
