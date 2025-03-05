@@ -205,27 +205,20 @@ app.post('/api/process', async (req, res) => {
     const top3 = bandiInfo.slice(0, 3);
     console.log("Top 3 bandi:", top3);
 
-    // Invia i risultati al webhook
-    console.log("Invio i risultati al webhook:", WEBHOOK_URL);
+    const payloadString = `email=${encodeURIComponent(email)}&bandi=${encodeURIComponent(
+      top3.map(b => `Nome: ${b.nomebando}, Link: ${b.schedasintetica}`).join(" | ")
+    )}`;
+    
+    console.log("Dati inviati come stringa:", payloadString);
+    
     await fetch(WEBHOOK_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email, // Aggiunge l'email dell'utente
-        bandi: top3
-      })      
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: payloadString
     });
+    
     console.log("Risultati inviati al webhook con successo.");
-    try{
-      let k = JSON.stringify({
-        email: email, // Aggiunge l'email dell'utente
-        bandi: top3
-      })    
-      console.log(k)}
-    catch (err) {
-      console.log(err)
-    }
-
+    
     // Risposta finale al client (GoHighLevel)
     res.status(200).json({ message: "Webhook inviato con successo." });
   } catch (err) {
