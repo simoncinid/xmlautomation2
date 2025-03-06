@@ -146,14 +146,27 @@ app.post('/api/process', async (req, res) => {
     }
     const xmlString = await responseXML.text();
     console.log("XML di risposta ricevuto:", xmlString.substring(0, 100) + "...");
-
+    // 🔹 Controllo: Se l'XML è vuoto, interrompi l'esecuzione
+    if (!xmlString || xmlString.trim() === "") {
+      console.warn("⚠️ Nessuna risposta XML ricevuta. Terminazione dell'esecuzione.");
+      return res.status(400).json({ error: "Nessuna risposta XML ricevuta." });
+    }
     // Parsing dell'XML
     console.log("Parsing dell'XML di risposta...");
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+    if (!xmlDoc || xmlDoc.getElementsByTagName("parsererror").length > 0) {
+      console.error("⚠️ Errore nel parsing dell'XML.");
+      return res.status(500).json({ error: "Errore nel parsing dell'XML." });
+    }
     console.log("XML completo ricevuto:\n", xmlString); // Stampa l'intero XML ricevuto
 
     const bandiNodes = xmlDoc.getElementsByTagName("child");
+    // 🔹 Controllo: Se non ci sono bandi, interrompi l'esecuzione
+    if (bandiNodes.length === 0) {
+      console.warn("⚠️ Nessun bando trovato nell'XML di risposta. Terminazione dell'esecuzione.");
+      return res.status(200).json({ message: "Nessun bando disponibile per questa azienda." });
+    }
     console.log("Numero di bandi trovati:", bandiNodes.length);
 
     // Logga l'intero contenuto di ogni nodo per capire la struttura
