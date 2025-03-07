@@ -149,7 +149,7 @@ app.post('/api/process', async (req, res) => {
     // 🔹 Controllo: Se l'XML è vuoto, interrompi l'esecuzione
     if (!xmlString || xmlString.trim() === "") {
       console.warn("⚠️ Nessuna risposta XML ricevuta. Terminazione dell'esecuzione.");
-      return res.status(400).json({ error: "Nessuna risposta XML ricevuta." });
+      return res.status(200).json({ error: "Nessuna risposta XML ricevuta." });
     }
     // Parsing dell'XML
     console.log("Parsing dell'XML di risposta...");
@@ -157,7 +157,7 @@ app.post('/api/process', async (req, res) => {
     const xmlDoc = parser.parseFromString(xmlString, "application/xml");
     if (!xmlDoc || xmlDoc.getElementsByTagName("parsererror").length > 0) {
       console.error("⚠️ Errore nel parsing dell'XML.");
-      return res.status(500).json({ error: "Errore nel parsing dell'XML." });
+      return res.status(200).json({ error: "Errore nel parsing dell'XML." });
     }
     console.log("XML completo ricevuto:\n", xmlString); // Stampa l'intero XML ricevuto
 
