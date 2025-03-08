@@ -219,15 +219,18 @@ app.post('/api/process', async (req, res) => {
     const top3 = bandiInfo.slice(0, 3);
     console.log("Top 3 bandi:", top3);
 
-    const payloadString = `numeroBandiTotali: ${l} email=${email} bandi=${top3.map(b => `Nome: ${b.nomebando}, Link: ${b.schedasintetica}`).join(" | ")}`;
-    
-    console.log("Dati inviati come stringa:", payloadString);
+    const payloadObject = {
+      response: `numeroBandiTotali: ${l} email=${email} bandi=${top3.map(b => `Nome: ${b.nomebando}, Link: ${b.schedasintetica}`).join(" | ")}`
+    };
+        
+    console.log("Dati inviati come stringa:", payloadObject);
     
     await fetch(WEBHOOK_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: payloadString
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payloadObject)
     });
+    
     
     console.log("Risultati inviati al webhook con successo.");
     
