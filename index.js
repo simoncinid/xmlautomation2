@@ -36,6 +36,14 @@ async function extractPdfText(pdfUrl) {
 async function getRelevanceScore(p, adm, bandoText) {
   console.log("Richiesta punteggio di rilevanza a OpenAI...");
 
+  // Tronca il testo se supera una lunghezza ragionevole (ad esempio 1000 caratteri)
+  const maxTextLength = 1000;
+  const truncatedUserText = userText.length > maxTextLength ? userText.substring(0, maxTextLength) + "..." : userText;
+  const truncatedBandoText = bandoText.length > maxTextLength ? bandoText.substring(0, maxTextLength) + "..." : bandoText;
+
+  console.log(`Testo azienda (troncato): ${truncatedUserText.length} caratteri`);
+  console.log(`Testo bando (troncato): ${truncatedBandoText.length} caratteri`);
+
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -53,16 +61,20 @@ async function getRelevanceScore(p, adm, bandoText) {
   });
 
   if (!response.ok) {
-    throw new Error("Errore OpenAI: " + response.statusText);
+    const errorResponse = await response.json();
+    console.error("Errore OpenAI:", errorResponse);
+    throw new Error(`Errore OpenAI: ${errorResponse.error.message || response.statusText}`);
   }
 
   const data = await response.json();
   const gptResponse = data.choices[0].message.content.trim();
-  const score = parseFloat(gptResponse.match(/\d+/)?.[0] || "0");
   
-  console.log(`Punteggio di rilevanza ricevuto: ${score}`);
-  return score;
+  const score = parseFloat(gptResponse.match(/\d+/)?.[0] || "0");
+
+  console.log(`Punteggio di rilevanza ricevuto: ${score} - Motivazione: ${gptResponse}`);
+  return { score};
 }
+
 
 // Endpoint /api/process
 app.post('/api/process', async (req, res) => {
@@ -125,19 +137,28 @@ app.post('/api/process', async (req, res) => {
       const nomebando = node.getElementsByTagName("nomebando")[0]?.textContent || "N/A";
       const schedasintetica = node.getElementsByTagName("schedasintetica")[0]?.textContent || "";
       console.log(`Bando ${i}: nome = ${nomebando}, schedasintetica = ${schedasintetica}`);
-
+    
       let pdfText = "";
       if (schedasintetica.endsWith(".pdf")) {
         console.log(`Estrazione PDF per il bando ${i}...`);
         const pdfProxyUrl = "https://xmlautomation-rt2n.onrender.com/pdf-proxy?url=" + encodeURIComponent(schedasintetica);
         pdfText = await extractPdfText(pdfProxyUrl);
       }
-
-      // Richiedi punteggio a GPT
-      let score = await getRelevanceScore(particolarita, aspetti_da_migliorare, pdfText || nomebando);
-
-      bandiInfo.push({ nomebando, schedasintetica, score });
+    
+      try {
+        // Richiedi punteggio a GPT
+        let { score, motivation } = await getRelevanceScore(particolarita, aspetti_da_migliorare, pdfText || nomebando);
+    
+        bandiInfo.push({ nomebando, schedasintetica, score, motivation });
+    
+      } catch (error) {
+        console.error(`❌ Errore OpenAI nel bando ${i}:`, error.message);
+        
+        // Termina completamente l'esecuzione con un errore
+        throw new Error(`Interruzione: OpenAI ha restituito un errore: ${error.message}`);
+      }
     }
+    
 
     // Ordina per punteggio e seleziona i migliori 3
     bandiInfo.sort((a, b) => b.score - a.score);
