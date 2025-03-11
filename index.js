@@ -37,7 +37,7 @@ async function getRelevanceScore(p, adm, bandoText) {
   console.log("Richiesta punteggio di rilevanza a OpenAI...");
 
   // Tronca il testo se supera una lunghezza ragionevole (ad esempio 1000 caratteri)
-  const maxTextLength = 1000;
+  const maxTextLength = 4000;
   //const truncatedUserText = userText.length > maxTextLength ? userText.substring(0, maxTextLength) + "..." : userText;
   const truncatedBandoText = bandoText.length > maxTextLength ? bandoText.substring(0, maxTextLength) + "..." : bandoText;
 
