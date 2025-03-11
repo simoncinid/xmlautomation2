@@ -38,10 +38,10 @@ async function getRelevanceScore(p, adm, bandoText) {
 
   // Tronca il testo se supera una lunghezza ragionevole (ad esempio 1000 caratteri)
   const maxTextLength = 1000;
-  const truncatedUserText = userText.length > maxTextLength ? userText.substring(0, maxTextLength) + "..." : userText;
+  //const truncatedUserText = userText.length > maxTextLength ? userText.substring(0, maxTextLength) + "..." : userText;
   const truncatedBandoText = bandoText.length > maxTextLength ? bandoText.substring(0, maxTextLength) + "..." : bandoText;
 
-  console.log(`Testo azienda (troncato): ${truncatedUserText.length} caratteri`);
+  //console.log(`Testo azienda (troncato): ${truncatedUserText.length} caratteri`);
   console.log(`Testo bando (troncato): ${truncatedBandoText.length} caratteri`);
 
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -54,7 +54,7 @@ async function getRelevanceScore(p, adm, bandoText) {
       model: "gpt-4-turbo",
       messages: [
         { role: "system", content: "Sei un assistente esperto nella valutazione di bandi di finanziamento. Il tuo compito è dare un punteggio di rilevanza tra 0 e 100 basato su quanto il bando è adatto alle esigenze dell'azienda." },
-        { role: "user", content: `Ecco la particolarità dell'azienda:\n"${p}"\n\nEcco cosa vuole migliorare l'azienda: ${adm}\n\nEcco il testo del bando:\n"${bandoText}"\n\nAssegna un punteggio da 0 a 100 indicando quanto questo bando è adatto all'azienda. RISPONDI SOLO CON IL VALORE: SOLO IL NUMERO!!` }
+        { role: "user", content: `Ecco la particolarità dell'azienda:\n"${p}"\n\nEcco cosa vuole migliorare l'azienda: ${adm}\n\nEcco il testo del bando:\n"${truncatedBandoText}"\n\nAssegna un punteggio da 0 a 100 indicando quanto questo bando è adatto all'azienda. RISPONDI SOLO CON IL VALORE: SOLO IL NUMERO!!` }
       ],
       max_tokens: 5000
     })
