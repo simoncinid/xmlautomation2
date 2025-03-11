@@ -56,7 +56,7 @@ async function getRelevanceScore(p, adm, bandoText) {
         { role: "system", content: "Sei un assistente esperto nella valutazione di bandi di finanziamento. Il tuo compito è dare un punteggio di rilevanza tra 0 e 100 basato su quanto il bando è adatto alle esigenze dell'azienda." },
         { role: "user", content: `Ecco la particolarità dell'azienda:\n"${p}"\n\nEcco cosa vuole migliorare l'azienda: ${adm}\n\nEcco il testo del bando:\n"${truncatedBandoText}"\n\nAssegna un punteggio da 0 a 100 indicando quanto questo bando è adatto all'azienda. RISPONDI SOLO CON IL VALORE: SOLO IL NUMERO!!` }
       ],
-      max_tokens: 5000
+      max_tokens: 4096
     })
   });
 
