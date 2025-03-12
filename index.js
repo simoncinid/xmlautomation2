@@ -122,7 +122,8 @@ app.post('/api/process', async (req, res) => {
       }
     }
     catch{
-      console.log("errore fecth")
+      console.log("errore fecth");
+      return res.status(200).json({error: "Errore fetch"});
     }
 
     // Parsing XML
