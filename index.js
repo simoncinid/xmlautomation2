@@ -114,17 +114,21 @@ app.post('/api/process', async (req, res) => {
     await new Promise(resolve => setTimeout(resolve, 30000));
 
     console.log("Recupero XML di risposta...");
-    try{
+    let xmlString = "";  // Definiamo xmlString all'inizio
+
+    try {
       const responseXML = await fetch("https://www.geniabusiness.com/ingplan/xmlbandiazienda.asp");
-      const xmlString = await responseXML.text();
+      xmlString = await responseXML.text();
       if (!xmlString.trim()) {
+        console.log("Nessuna risposta XML ricevuta.");
         return res.status(200).json({ error: "Nessuna risposta XML ricevuta." });
       }
+    } catch (error) {
+      console.log("Errore nella fetch:", error);
+      return res.status(200).json({ error: "Errore nel recupero dell'XML." });
     }
-    catch{
-      console.log("errore fecth");
-      return res.status(200).json({error: "Errore fetch"});
-    }
+
+
 
     // Parsing XML
     console.log("Parsing dell'XML di risposta...");
