@@ -125,6 +125,8 @@ app.post('/api/process', async (req, res) => {
         const payloadObject = {
           response: `null`
         };
+
+        console.log(JSON.stringify(payloadObject))
         
         await fetch(WEBHOOK_URL, {
           method: "POST",
