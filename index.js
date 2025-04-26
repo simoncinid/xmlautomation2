@@ -121,6 +121,16 @@ app.post('/api/process', async (req, res) => {
       xmlString = await responseXML.text();
       if (!xmlString.trim()) {
         console.log("Nessuna risposta XML ricevuta.");
+        // Invia i risultati al webhook
+        const payloadObject = {
+          response: `null`
+        };
+        
+        await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payloadObject)
+        });
         return res.status(200).json({ error: "Nessuna risposta XML ricevuta." });
       }
     } catch (error) {
