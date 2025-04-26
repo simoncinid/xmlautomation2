@@ -128,6 +128,8 @@ app.post('/api/process', async (req, res) => {
       return res.status(200).json({ error: "Errore nel recupero dell'XML." });
     }
 
+    console.log(xmlString);
+
 
 
     // Parsing XML
