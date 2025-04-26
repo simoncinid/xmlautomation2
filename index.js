@@ -127,6 +127,7 @@ app.post('/api/process', async (req, res) => {
         };
 
         console.log(JSON.stringify(payloadObject))
+        sys.stdout.flush()
         
         await fetch(WEBHOOK_URL, {
           method: "POST",
