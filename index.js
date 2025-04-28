@@ -123,11 +123,10 @@ app.post('/api/process', async (req, res) => {
         console.log("Nessuna risposta XML ricevuta.");
         // Invia i risultati al webhook
         const payloadObject = {
-          response: `null`
+          response: `res: abcdefghilmnopqrstuvz email: ${email}`
         };
 
         console.log(JSON.stringify(payloadObject))
-        
         
         await fetch(WEBHOOK_URL, {
           method: "POST",
