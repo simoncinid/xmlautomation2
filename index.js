@@ -103,7 +103,7 @@ app.post('/api/process', async (req, res) => {
   </Business>
 </Businesses>`;
     
-    console.log("Invio XML a xmlautomation-rt2n...");
+    console.log("Invio XML a xmlautomation-orvn...");
     await fetch("https://xmlautomation-orvn.onrender.com/upload-xml", {
       method: "POST",
       headers: { "Content-Type": "application/xml" },
@@ -165,7 +165,7 @@ app.post('/api/process', async (req, res) => {
       let pdfText = "";
       if (schedasintetica.endsWith(".pdf")) {
         console.log(`Estrazione PDF per il bando ${i}...`);
-        const pdfProxyUrl = "https://xmlautomation-rt2n.onrender.com/pdf-proxy?url=" + encodeURIComponent(schedasintetica);
+        const pdfProxyUrl = "https://xmlautomation-orvn.onrender.com/pdf-proxy?url=" + encodeURIComponent(schedasintetica);
         pdfText = await extractPdfText(pdfProxyUrl);
       }
     
