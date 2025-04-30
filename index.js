@@ -104,7 +104,7 @@ app.post('/api/process', async (req, res) => {
 </Businesses>`;
     
     console.log("Invio XML a xmlautomation-rt2n...");
-    await fetch("https://xmlautomation-rt2n.onrender.com/upload-xml", {
+    await fetch("https://xmlautomation-orvn.onrender.com/upload-xml", {
       method: "POST",
       headers: { "Content-Type": "application/xml" },
       body: xmlPayload
